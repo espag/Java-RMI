@@ -1,0 +1,28 @@
+To manage the Student’s first name and last name, a Student Class is created
+Student Class-
+⦁	First name - variable 
+⦁	Last name – variable 
+⦁	Get/Set Methods 
+One Interface is created – Stud.java
+StudentImpl.java is the implementation of that interface 
+⦁	queryFirstName 
+⦁	Input – String Last Name 
+⦁	Return value – ArrayList of Student class 
+Server - Design 
+⦁	Simple RMI implementation is done on server side
+⦁	To get the Student Data, Server Program will first connect to ‘mysql’ through JDBC
+⦁	IP address is explicitly specified in the  server using command- 
+System.setProperty(“java.rmi.server.hostname”, “10.42.0.134”);
+This prevent the client from connecting to the localhost of the server machine and ensure binding of server and client
+Binding
+⦁	Server will create one object of Server and it will send it to the rmiregistry to bind it with ‘studentquery’ 
+⦁	Command used - Naming.rebind("rmi://10.42.0.134:6666/studentquery", r); where ‘r’ is the skeleton object
+Query First name 
+⦁	To find the student’s first name, Program will goes through the whole array list and compare the student’s last name with the provided argument and if the name matches then it will add the student object into a new arraylist and it will return this list
+Client – Design 
+Getting the Server Object 
+⦁	Client will lookup for the ‘studentquery’ name from the rmiregistry and will get the object 
+⦁	Command used– 
+StudentQuery stub=(StudentQuery)Naming.lookup("rmi://10.42.0.134:6666/studentquery”); 
+⦁	Once the object is received, it will ask the user to enter the last name for the query. 
+⦁	After the user enters the last name, it will call the method using the server object and get the array list from the server and display the result on the screen
